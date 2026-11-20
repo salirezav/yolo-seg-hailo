@@ -1,0 +1,49 @@
+[project]
+name = "yolo-seg-hailo"
+version = "0.1.0"
+description = "Train YOLOv8n-seg for a Hailo-8 module and RTMDet-Ins-tiny under Apache-2.0."
+readme = "README.md"
+authors = [{ name = "Alireza Vaezi", email = "s.alireza.v@gmail.com" }]
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "numpy>=1.26,<2",
+    "pycocotools>=2.0.7",
+    "pyyaml>=6.0",
+    "torch==2.1.2",
+    "torchvision==0.16.2",
+    "ultralytics>=8.3.0",
+]
+
+[dependency-groups]
+rtmdet = [
+    "mmdet==3.3.0",
+    "mmcv==2.1.0",
+    "mmengine>=0.10.3,<1",
+    "setuptools>=70,<81",
+]
+
+[project.scripts]
+convert-coco-seg = "yolo_seg_hailo.convert_yolo_seg:main"
+train-yolov8n-seg = "yolo_seg_hailo.train_yolov8n_seg:main"
+train-rtmdet-ins = "yolo_seg_hailo.train_rtmdet_ins:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/yolo_seg_hailo"]
+
+[tool.uv]
+package = true
+default-groups = ["rtmdet"]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu121" }
+torchvision = { index = "pytorch-cu121" }
+mmcv = { url = "https://download.openmmlab.com/mmcv/dist/cu121/torch2.1.0/mmcv-2.1.0-cp311-cp311-win_amd64.whl" }
+
+[[tool.uv.index]]
+name = "pytorch-cu121"
+url = "https://download.pytorch.org/whl/cu121"
+explicit = true
