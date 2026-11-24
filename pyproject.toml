@@ -1,7 +1,7 @@
 [project]
 name = "yolo-seg-hailo"
 version = "0.1.0"
-description = "Train YOLOv8n-seg for a Hailo-8 module and RTMDet-Ins-tiny under Apache-2.0."
+description = "Train YOLOv8n-seg for Hailo-8, YOLO26n-seg for non-Hailo, and RTMDet-Ins-tiny under Apache-2.0."
 readme = "README.md"
 authors = [{ name = "Alireza Vaezi", email = "s.alireza.v@gmail.com" }]
 requires-python = ">=3.11,<3.12"
@@ -11,7 +11,7 @@ dependencies = [
     "pyyaml>=6.0",
     "torch==2.1.2",
     "torchvision==0.16.2",
-    "ultralytics>=8.3.0",
+    "ultralytics>=8.4.0",
 ]
 
 [dependency-groups]
@@ -25,6 +25,8 @@ rtmdet = [
 [project.scripts]
 convert-coco-seg = "yolo_seg_hailo.convert_yolo_seg:main"
 train-yolov8n-seg = "yolo_seg_hailo.train_yolov8n_seg:main"
+train-yolo-hailo = "yolo_seg_hailo.train_yolov8n_seg:main"
+train-yolo26n-seg = "yolo_seg_hailo.train_yolo26n_seg:main"
 train-rtmdet-ins = "yolo_seg_hailo.train_rtmdet_ins:main"
 
 [build-system]

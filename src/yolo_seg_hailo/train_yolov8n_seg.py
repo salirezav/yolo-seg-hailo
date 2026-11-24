@@ -1,9 +1,15 @@
-"""Train YOLOv8n-seg so the checkpoint can be compiled for this Hailo-8 module.
+"""Train YOLOv8n-seg for Hailo-8 HEF export.
 
-The export itself is a later step on Linux x86_64 with Hailo Dataflow Compiler
-v3.x. This script keeps the choices that export requires: the stock YOLOv8n
-segment head and a fixed 640 input. Firmware on the module is 4.23.0, so the
-matching compile target is name=hailo8.
+Ultralytics instance-seg Hailo export supports YOLOv8-seg and YOLO11-seg only.
+YOLO26-seg cannot compile to HEF. YOLOv8n-seg is the better Hailo choice:
+higher INT8 mask mAP retention and faster HEF inference than YOLO11n-seg.
+
+Export later on Linux x86_64 with DFC v3.x. Firmware on this module is 4.23.0,
+so compile with name=hailo8 and a fixed 640 input.
+
+Examples:
+  uv run train-yolov8n-seg --epochs 100 --patience 30
+  uv run train-yolo-hailo --epochs 100 --patience 30
 """
 
 from __future__ import annotations
@@ -54,6 +60,7 @@ def main() -> None:
         print("CUDA is not available. Training on CPU.")
         device = "cpu"
 
+    print(f"Hailo-compatible trainer: {YOLO_WEIGHTS} -> HEF target {HAILO_TARGET}, imgsz={args.imgsz}")
     model = YOLO(YOLO_WEIGHTS)
     results = model.train(
         data=str(data_yaml),

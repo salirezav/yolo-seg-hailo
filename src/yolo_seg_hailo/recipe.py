@@ -3,7 +3,11 @@
 # hailortcli reports HAILO8 / HM218B1C2FAE. Compile later with DFC v3.x.
 HAILO_TARGET = "hailo8"
 HAILO_IMGSZ = 640
+# Hailo instance-seg HEF: YOLOv8-seg / YOLO11-seg only. YOLO26-seg cannot export.
+# YOLOv8n-seg keeps more INT8 mask mAP and runs faster on Hailo than YOLO11n-seg.
 YOLO_WEIGHTS = "yolov8n-seg.pt"
+# Non-Hailo path: Ultralytics YOLO26 nano segmenter (needs ultralytics>=8.4.0).
+YOLO26_WEIGHTS = "yolo26n-seg.pt"
 
 # Roboflow v3 online augmentations. Ultralytics applies hsv_* as random gains.
 # Hue of 13 degrees on a 360 degree wheel is 13/360.

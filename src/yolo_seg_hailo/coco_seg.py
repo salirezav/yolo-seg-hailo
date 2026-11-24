@@ -12,6 +12,7 @@ import numpy as np
 from pycocotools import mask as mask_util
 
 SPLITS = ("train", "valid", "test")
+IGNORED_CLASSES = frozenset({"pecan-surface"})
 
 
 def resolve_dataset_dir(path: Path | None) -> Path:
@@ -49,6 +50,9 @@ def convert_to_yolo_seg(dataset_dir: Path, output_dir: Path) -> Path:
         images_by_id = {image["id"]: image for image in coco["images"]}
         grouped: dict[int, list[dict]] = {image_id: [] for image_id in images_by_id}
         for annotation in coco["annotations"]:
+            if annotation["category_id"] not in class_index:
+                totals["ignored"] = totals.get("ignored", 0) + 1
+                continue
             grouped.setdefault(annotation["image_id"], []).append(annotation)
 
         image_dir = output_dir / "images" / split
@@ -80,7 +84,8 @@ def convert_to_yolo_seg(dataset_dir: Path, output_dir: Path) -> Path:
     print(
         f"Wrote {yaml_path} ({len(class_names)} classes, "
         f"{totals['polygons']} polygons, {totals['rle']} RLE masks converted, "
-        f"{totals['dropped']} unusable contours dropped)"
+        f"{totals['dropped']} unusable contours dropped, "
+        f"{totals.get('ignored', 0)} ignored-class annotations skipped)"
     )
     return yaml_path
 
@@ -105,6 +110,7 @@ def write_mmdet_annotations(dataset_dir: Path, output_dir: Path) -> dict[str, Pa
             "annotations": [
                 {**annotation, "category_id": id_map[annotation["category_id"]]}
                 for annotation in coco["annotations"]
+                if annotation["category_id"] in id_map
             ],
             "categories": [
                 {
@@ -147,7 +153,8 @@ def _load(path: Path) -> dict:
 
 
 def _sorted_categories(coco: dict) -> list[dict]:
-    return sorted(coco["categories"], key=lambda category: category["id"])
+    kept = [category for category in coco["categories"] if category["name"] not in IGNORED_CLASSES]
+    return sorted(kept, key=lambda category: category["id"])
 
 
 def _class_names(coco: dict) -> list[str]:
@@ -225,8 +232,9 @@ def _link_or_copy(source: Path, destination: Path) -> None:
 
 
 def _write_data_yaml(path: Path, class_names: list[str]) -> None:
+    # Omit path. Ultralytics then uses this file's directory as the dataset root.
+    # A path of "." is the process cwd, which is the repo root, not dataset-yolo.
     lines = [
-        f"path: {path.parent.as_posix()}",
         "train: images/train",
         "val: images/valid",
         "test: images/test",

@@ -1,0 +1,1 @@
+yolo export model=runs/segment/train/weights/best.pt format=hailo name=hailo8 imgsz=640 data=path/to/dataset.yamlyolo export model=runs/segment/train/weights/best.pt format=hailo name=hailo8 imgsz=640 data=path/to/dataset.yaml

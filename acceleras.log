@@ -1,0 +1,3 @@
+2026-11-20 10:37:05,710 - INFO - nvidia_smi_gpu_selector.py:39 - No GPU chosen, Selected GPU 0
+2026-11-20 10:39:58,504 - INFO - nvidia_smi_gpu_selector.py:39 - No GPU chosen, Selected GPU 0
+2026-11-20 10:47:59,684 - INFO - nvidia_smi_gpu_selector.py:39 - No GPU chosen, Selected GPU 0

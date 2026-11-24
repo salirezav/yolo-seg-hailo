@@ -1,0 +1,4 @@
+2026-11-20 10:39:15,103 - WARNING - __init__.py:56 - Cannot use graphviz, so no visualizations will be created
+2026-11-20 10:39:15,115 - INFO - __init__.py:84 - First time Hailo Dataflow Compiler is being used. Checking system requirements... (this might take a few seconds)
+2026-11-20 10:40:48,529 - WARNING - __init__.py:56 - Cannot use graphviz, so no visualizations will be created
+2026-11-20 10:48:47,045 - WARNING - __init__.py:56 - Cannot use graphviz, so no visualizations will be created

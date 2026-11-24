@@ -1,0 +1,11 @@
+[Error] Requirement python3-tk not found.
+[Error] See full log: /mnt/d/Projects/yolo-seg-hailo/.install_logs/hailo_installation_log_2026.11.20T10:39:15.log
+[Error] Requirement graphviz not found.
+[Error] See full log: /mnt/d/Projects/yolo-seg-hailo/.install_logs/hailo_installation_log_2026.11.20T10:39:15.log
+[Error] Requirement libgraphviz-dev not found.
+[Error] See full log: /mnt/d/Projects/yolo-seg-hailo/.install_logs/hailo_installation_log_2026.11.20T10:39:15.log
+[Error] Requirement python3.10-dev not found.
+[Error] See full log: /mnt/d/Projects/yolo-seg-hailo/.install_logs/hailo_installation_log_2026.11.20T10:39:15.log
+[Warning] It is recommended to have 32 GB of RAM, while this system has only 24 GB.
+[Warning] CUDNN version should be 9 or higher, found ..
+[Info] No response - exitting.
